@@ -5,8 +5,8 @@ import TopFilter from "@arcgis/core/rest/support/TopFilter";
 import LayerView from "@arcgis/core/views/layers/LayerView";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-type OrderBy = "ASC" | "DESC";
-type Year = "TOTAL" | "F2018" | "F2019" | "F2020";
+export type OrderBy = "ASC" | "DESC";
+export type Year = "TOTAL" | "F2018" | "F2019" | "F2020";
 
 interface FilterPanelState {
   orderBy: OrderBy;

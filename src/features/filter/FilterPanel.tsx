@@ -23,6 +23,8 @@ import {
   setCount,
   setOrderBy,
   setYear,
+  OrderBy,
+  Year,
 } from "./filterSlice";
 
 const marks = [
@@ -78,7 +80,7 @@ export default function FilterPanel() {
 
   function handleOrderByChange(event: React.MouseEvent<HTMLElement>) {
     const target = event.target as HTMLButtonElement;
-    dispatch(setOrderBy(target.value as "ASC" | "DESC"));
+    dispatch(setOrderBy(target.value as OrderBy));
     dispatch(
       filterItems({
         orderBy,
@@ -91,9 +93,7 @@ export default function FilterPanel() {
   }
 
   function handleYearChange(event: SelectChangeEvent) {
-    dispatch(
-      setYear(event.target.value as "TOTAL" | "F2018" | "F2019" | "F2020")
-    );
+    dispatch(setYear(event.target.value as Year));
     dispatch(
       filterItems({
         orderBy,
