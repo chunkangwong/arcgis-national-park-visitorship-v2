@@ -62,7 +62,6 @@ export default function FilterPanel() {
   const { layerView, featureLayer } = useSelector(
     (state: RootState) => state.arcgis
   );
-  const [expanded, setExpanded] = React.useState(true);
 
   React.useEffect(() => {
     if (status === "idle") {
@@ -155,61 +154,59 @@ export default function FilterPanel() {
           <RefreshIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <Stack
-          direction="column"
-          spacing={2}
-          m={2}
-          divider={<Divider orientation="horizontal" flexItem />}
-        >
-          <div>
-            <Typography>Data type, per state</Typography>
-            <ToggleButtonGroup
-              color="primary"
-              value={orderBy}
-              exclusive
-              onChange={handleOrderByChange}
-              size="small"
-              fullWidth
-            >
-              <ToggleButton value="ASC">Most visited</ToggleButton>
-              <ToggleButton value="DESC">Least visited</ToggleButton>
-            </ToggleButtonGroup>
-          </div>
-          <div>
-            <Typography>Year data to display</Typography>
-            <Select
-              labelId="demo-simple-select-label"
-              id="demo-simple-select"
-              value={year}
-              onChange={handleYearChange}
-              fullWidth
-              inputProps={{ "aria-label": "Without label" }}
-            >
-              <MenuItem value="TOTAL">Total of all time</MenuItem>
-              <MenuItem value="F2018">2018</MenuItem>
-              <MenuItem value="F2019">2019</MenuItem>
-              <MenuItem value="F2020">2020</MenuItem>
-            </Select>
-          </div>
-          <div>
-            <Typography>Max parks per state</Typography>
-            <Slider
-              aria-label="Always visible"
-              defaultValue={1}
-              step={1}
-              marks={marks}
-              getAriaValueText={valuetext}
-              valueLabelDisplay="off"
-              min={1}
-              max={5}
-              onChange={handleCountChange}
-              onChangeCommitted={handleCountChangeCommitted}
-              value={count}
-            />
-          </div>
-        </Stack>
-      </Collapse>
+      <Stack
+        direction="column"
+        spacing={2}
+        m={2}
+        divider={<Divider orientation="horizontal" flexItem />}
+      >
+        <div>
+          <Typography>Data type, per state</Typography>
+          <ToggleButtonGroup
+            color="primary"
+            value={orderBy}
+            exclusive
+            onChange={handleOrderByChange}
+            size="small"
+            fullWidth
+          >
+            <ToggleButton value="ASC">Most visited</ToggleButton>
+            <ToggleButton value="DESC">Least visited</ToggleButton>
+          </ToggleButtonGroup>
+        </div>
+        <div>
+          <Typography>Year data to display</Typography>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={year}
+            onChange={handleYearChange}
+            fullWidth
+            inputProps={{ "aria-label": "Without label" }}
+          >
+            <MenuItem value="TOTAL">Total of all time</MenuItem>
+            <MenuItem value="F2018">2018</MenuItem>
+            <MenuItem value="F2019">2019</MenuItem>
+            <MenuItem value="F2020">2020</MenuItem>
+          </Select>
+        </div>
+        <div>
+          <Typography>Max parks per state</Typography>
+          <Slider
+            aria-label="Always visible"
+            defaultValue={1}
+            step={1}
+            marks={marks}
+            getAriaValueText={valuetext}
+            valueLabelDisplay="off"
+            min={1}
+            max={5}
+            onChange={handleCountChange}
+            onChangeCommitted={handleCountChangeCommitted}
+            value={count}
+          />
+        </div>
+      </Stack>
     </Card>
   );
 }
