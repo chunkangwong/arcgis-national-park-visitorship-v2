@@ -60,7 +60,10 @@ export default function ResultPanel() {
       });
       view.goTo(
         {
-          center: [feature.geometry.longitude, feature.geometry.latitude],
+          center: [
+            (feature.geometry as __esri.Point).longitude,
+            (feature.geometry as __esri.Point).latitude,
+          ],
           zoom: 4,
         },
         { duration: 400 }
@@ -79,7 +82,6 @@ export default function ResultPanel() {
           onClick={handleExpandClick}
           aria-expanded={expanded}
           aria-label="show more"
-          disabled={status !== "succeeded"}
         >
           <ExpandMoreIcon />
         </ExpandMore>

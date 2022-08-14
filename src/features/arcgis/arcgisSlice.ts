@@ -1,6 +1,6 @@
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import Map from "@arcgis/core/Map";
-import LayerView from "@arcgis/core/views/layers/LayerView";
+import FeatureLayerView from "@arcgis/core/views/layers/FeatureLayerView";
 import MapView from "@arcgis/core/views/MapView";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -8,7 +8,7 @@ interface ArcgisState {
   map: Map;
   view: MapView;
   featureLayer: FeatureLayer;
-  layerView?: LayerView;
+  layerView?: FeatureLayerView;
 }
 
 const featureLayer = new FeatureLayer({

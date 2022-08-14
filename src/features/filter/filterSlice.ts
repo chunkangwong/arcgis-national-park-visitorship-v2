@@ -1,8 +1,9 @@
 import Graphic from "@arcgis/core/Graphic";
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
+import FeatureFilter from "@arcgis/core/layers/support/FeatureFilter";
 import TopFeaturesQuery from "@arcgis/core/rest/support/TopFeaturesQuery";
 import TopFilter from "@arcgis/core/rest/support/TopFilter";
-import LayerView from "@arcgis/core/views/layers/LayerView";
+import FeatureLayerView from "@arcgis/core/views/layers/FeatureLayerView";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type OrderBy = "ASC" | "DESC";
@@ -22,7 +23,7 @@ interface FilterState extends FilterPanelState {
 
 interface ResultFilterProps extends FilterPanelState {
   featureLayer: FeatureLayer;
-  layerView?: LayerView;
+  layerView?: FeatureLayerView;
 }
 
 const initialState: FilterState = {
@@ -59,7 +60,10 @@ export const filterItems = createAsyncThunk(
     query.orderByFields = [""];
     const objectIds = await featureLayer.queryTopObjectIds(query);
     if (layerView) {
-      layerView.filter = { objectIds };
+      const filter = new FeatureFilter({
+        objectIds: objectIds,
+      });
+      layerView.filter = filter;
     }
     return results.features;
   }

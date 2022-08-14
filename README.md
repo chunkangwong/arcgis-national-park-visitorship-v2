@@ -1,3 +1,11 @@
-# ts-react-redux-mui-vite-template
+# ArcGIS National Parks Visitorship v2
 
-A project template for a TypeScript React, Redux, MUI, Vite project.
+This project is to demonstrate the development of a ArcGIS web app using ArcGIS JavaSript API 4.x ESM and the following tech stack below:
+
+- TypeScript
+- React
+- Redux Toolkit
+- Material UI
+- Vite
+
+This project is a React version of what is demonstrated [here](https://developers.arcgis.com/calcite-design-system/tutorials/core-concepts/) in the official tutorial.
