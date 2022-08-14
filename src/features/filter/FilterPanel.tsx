@@ -63,7 +63,7 @@ export default function FilterPanel() {
   );
 
   React.useEffect(() => {
-    if (status === "idle") {
+    if (status === "idle" && layerView) {
       dispatch(
         filterItems({
           orderBy,
