@@ -8,4 +8,4 @@ This project is to demonstrate the development of a ArcGIS web app using ArcGIS 
 - Material UI
 - Vite
 
-This project is a React version of what is demonstrated [here](https://developers.arcgis.com/calcite-design-system/tutorials/core-concepts/) in the official tutorial.
+This project is a React version of what is demonstrated [here](https://developers.arcgis.com/calcite-design-system/tutorials/core-concepts/) in the official tutorial and is currently hosted in [Firebase](https://arcgis-national-park-visit-2.firebaseapp.com/).
