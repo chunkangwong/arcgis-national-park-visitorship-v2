@@ -63,7 +63,7 @@ export default function FilterPanel() {
   );
 
   React.useEffect(() => {
-    if (status === "idle" && layerView) {
+    if (layerView) {
       dispatch(
         filterItems({
           orderBy,
@@ -74,33 +74,15 @@ export default function FilterPanel() {
         }) as any
       );
     }
-  }, [status, dispatch, layerView]);
+  }, [orderBy, count, year, layerView]);
 
   function handleOrderByChange(event: React.MouseEvent<HTMLElement>) {
     const target = event.target as HTMLButtonElement;
     dispatch(setOrderBy(target.value as OrderBy));
-    dispatch(
-      filterItems({
-        orderBy,
-        count,
-        year,
-        layerView,
-        featureLayer,
-      }) as any
-    );
   }
 
   function handleYearChange(event: SelectChangeEvent) {
     dispatch(setYear(event.target.value as Year));
-    dispatch(
-      filterItems({
-        orderBy,
-        count,
-        year,
-        layerView,
-        featureLayer,
-      }) as any
-    );
   }
 
   function handleCountChange(
@@ -115,28 +97,10 @@ export default function FilterPanel() {
     value: number | number[]
   ) {
     dispatch(setCount(value as number));
-    dispatch(
-      filterItems({
-        orderBy,
-        count,
-        year,
-        layerView,
-        featureLayer,
-      }) as any
-    );
   }
 
   function handleResetDefault() {
     dispatch(resetDefault());
-    dispatch(
-      filterItems({
-        orderBy,
-        count,
-        year,
-        layerView,
-        featureLayer,
-      }) as any
-    );
   }
 
   return (
