@@ -5,9 +5,12 @@ import TopFilter from "@arcgis/core/rest/support/TopFilter";
 import LayerView from "@arcgis/core/views/layers/LayerView";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+type OrderBy = "ASC" | "DESC";
+type Year = "TOTAL" | "F2018" | "F2019" | "F2020";
+
 interface FilterPanelState {
-  orderBy: "DESC" | "ASC";
-  year: "TOTAL" | "F2018" | "F2019" | "F2020";
+  orderBy: OrderBy;
+  year: Year;
   count: number;
 }
 
@@ -69,13 +72,10 @@ const filterSlice = createSlice({
     setCount: (state, action: PayloadAction<number>) => {
       state.count = action.payload;
     },
-    setOrderBy: (state, action: PayloadAction<"DESC" | "ASC">) => {
+    setOrderBy: (state, action: PayloadAction<OrderBy>) => {
       state.orderBy = action.payload;
     },
-    setYear: (
-      state,
-      action: PayloadAction<"TOTAL" | "F2018" | "F2019" | "F2020">
-    ) => {
+    setYear: (state, action: PayloadAction<Year>) => {
       state.year = action.payload;
     },
     resetDefault(state) {
