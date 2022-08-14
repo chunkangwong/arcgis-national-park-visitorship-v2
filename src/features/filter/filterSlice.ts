@@ -27,7 +27,7 @@ interface ResultFilterProps extends FilterPanelState {
 }
 
 const initialState: FilterState = {
-  orderBy: "ASC",
+  orderBy: "DESC",
   year: "TOTAL",
   count: 1,
   status: "idle",
@@ -83,7 +83,7 @@ const filterSlice = createSlice({
       state.year = action.payload;
     },
     resetDefault(state) {
-      state.orderBy = "ASC";
+      state.orderBy = "DESC";
       state.year = "TOTAL";
       state.count = 1;
     },

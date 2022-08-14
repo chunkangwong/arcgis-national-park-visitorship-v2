@@ -148,7 +148,7 @@ export default function FilterPanel() {
           color="primary"
           onClick={handleResetDefault}
           sx={{ marginLeft: "auto" }}
-          disabled={orderBy === "ASC" && year === "TOTAL" && count === 1}
+          disabled={orderBy === "DESC" && year === "TOTAL" && count === 1}
         >
           <RefreshIcon />
         </IconButton>
@@ -169,8 +169,8 @@ export default function FilterPanel() {
             size="small"
             fullWidth
           >
-            <ToggleButton value="ASC">Most visited</ToggleButton>
-            <ToggleButton value="DESC">Least visited</ToggleButton>
+            <ToggleButton value="DESC">Most visited</ToggleButton>
+            <ToggleButton value="ASC">Least visited</ToggleButton>
           </ToggleButtonGroup>
         </div>
         <div>
