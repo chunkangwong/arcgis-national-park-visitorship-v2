@@ -16,10 +16,10 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useTheme } from "@mui/system";
-import { setTempDrawerOpen } from "../layout/layoutSlice";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { setTempDrawerOpen } from "../layout/layoutSlice";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -86,7 +86,11 @@ export default function ResultPanel() {
           <ExpandMoreIcon />
         </ExpandMore>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <Collapse
+        in={status === "loading" ? false : expanded}
+        timeout="auto"
+        unmountOnExit
+      >
         <List>
           {features.map((feature, index) => (
             <ListItemButton
