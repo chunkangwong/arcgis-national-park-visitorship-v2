@@ -2,7 +2,6 @@ import RefreshIcon from "@mui/icons-material/Refresh";
 import {
   Card,
   CardActions,
-  Collapse,
   Divider,
   IconButton,
   MenuItem,
@@ -19,11 +18,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import {
   filterItems,
+  OrderBy,
   resetDefault,
   setCount,
   setOrderBy,
   setYear,
-  OrderBy,
   Year,
 } from "./filterSlice";
 
@@ -157,7 +156,7 @@ export default function FilterPanel() {
       <Stack
         direction="column"
         spacing={2}
-        m={2}
+        m={3}
         divider={<Divider orientation="horizontal" flexItem />}
       >
         <div>

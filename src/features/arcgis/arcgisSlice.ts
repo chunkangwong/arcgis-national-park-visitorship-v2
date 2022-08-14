@@ -3,7 +3,6 @@ import Map from "@arcgis/core/Map";
 import LayerView from "@arcgis/core/views/layers/LayerView";
 import MapView from "@arcgis/core/views/MapView";
 import { createSlice } from "@reduxjs/toolkit";
-import Expand from "@arcgis/core/widgets/Expand";
 
 interface ArcgisState {
   map: Map;
