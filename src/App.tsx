@@ -1,12 +1,13 @@
-import { Box, Drawer, Grid, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Drawer, useMediaQuery, useTheme } from "@mui/material";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import "./App.css";
 import { setLayerView } from "./features/arcgis/arcgisSlice";
 import { setTempDrawerOpen } from "./features/layout/layoutSlice";
 import LeftPanel from "./features/layout/LeftPanel";
 import { RootState } from "./store/store";
 import Button from "./widgets/Button";
+
+const drawerWidth = "240px";
 
 function App() {
   const dispatch = useDispatch();
@@ -45,21 +46,21 @@ function App() {
   }
 
   return (
-    <Grid container className="App" component={Box}>
-      <Grid
-        item
-        xs={0}
-        sm={2}
-        component={Box}
-        display={{
-          xs: "none",
-          sm: "block",
-        }}
+    <Box
+      sx={{
+        display: "flex",
+        height: "100%",
+      }}
+    >
+      <Box
+        component="nav"
+        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        aria-label="mailbox folders"
       >
         <Drawer
           PaperProps={{
             sx: {
-              width: "240px",
+              width: drawerWidth,
             },
           }}
           anchor="left"
@@ -69,18 +70,16 @@ function App() {
         >
           <LeftPanel />
         </Drawer>
-      </Grid>
-      <Grid
-        item
-        sm={10}
-        xs={12}
-        style={{
+      </Box>
+      <Box
+        sx={{
+          flexGrow: 1,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
           height: "100%",
         }}
-      >
-        <div id="viewDiv" ref={viewRef}></div>
-      </Grid>
-    </Grid>
+        ref={viewRef}
+      ></Box>
+    </Box>
   );
 }
 
