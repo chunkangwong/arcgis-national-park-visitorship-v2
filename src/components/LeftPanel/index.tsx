@@ -1,7 +1,7 @@
 import { Paper, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
-import FilterPanel from "../filter/FilterPanel";
-import ResultPanel from "../layout/ResultPanel";
+import FilterPanel from "./FilterPanel";
+import ResultPanel from "./ResultPanel";
 
 export default function LeftPanel() {
   return (

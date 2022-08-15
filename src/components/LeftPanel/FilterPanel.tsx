@@ -24,7 +24,7 @@ import {
   setOrderBy,
   setYear,
   Year,
-} from "./filterSlice";
+} from "@features/filter/filterSlice";
 
 const marks = [
   {

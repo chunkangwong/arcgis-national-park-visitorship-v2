@@ -3,9 +3,9 @@ import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setLayerView } from "./features/arcgis/arcgisSlice";
 import { setTempDrawerOpen } from "./features/layout/layoutSlice";
-import LeftPanel from "./features/layout/LeftPanel";
+import LeftPanel from "./components/LeftPanel";
 import { RootState } from "./store/store";
-import Button from "./widgets/Button";
+import ExpandButton from "./widgets/ExpandButton";
 
 const drawerWidth = "240px";
 
@@ -31,12 +31,12 @@ function App() {
   React.useEffect(() => {
     view.when(() => {
       if (!matches) {
-        Button.addEventListener("click", () => {
+        ExpandButton.addEventListener("click", () => {
           dispatch(setTempDrawerOpen(true));
         });
-        view.ui.add(Button, "top-left");
+        view.ui.add(ExpandButton, "top-left");
       } else {
-        view.ui.remove(Button);
+        view.ui.remove(ExpandButton);
       }
     });
   }, [view, matches]);

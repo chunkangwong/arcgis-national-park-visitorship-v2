@@ -19,7 +19,7 @@ import { useTheme } from "@mui/system";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { setTempDrawerOpen } from "../layout/layoutSlice";
+import { setTempDrawerOpen } from "@features/layout/layoutSlice";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
