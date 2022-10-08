@@ -14,7 +14,7 @@ export default function LeftPanel() {
   const { orderBy, count, year } = useFilter();
   const { mapView, featureLayer } = useArcgis();
 
-  const { data, refetch } = useQuery(["filter"], async () => {
+  const { status, data, refetch } = useQuery(["filter"], async () => {
     const query = new TopFeaturesQuery({
       topFilter: new TopFilter({
         topCount: count,
@@ -53,7 +53,7 @@ export default function LeftPanel() {
         <Typography>National Park Visitation</Typography>
       </Paper>
       <FilterPanel />
-      <ResultPanel features={data} />
+      <ResultPanel features={data} status={status} />
     </Stack>
   );
 }

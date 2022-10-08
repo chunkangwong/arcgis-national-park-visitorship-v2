@@ -37,9 +37,10 @@ export const ExpandMore = styled((props: ExpandMoreProps) => {
 
 interface ResultPanel {
   features?: Graphic[];
+  status: "loading" | "error" | "success";
 }
 
-export default function ResultPanel({ features }: ResultPanel) {
+export default function ResultPanel({ features, status }: ResultPanel) {
   const theme = useTheme();
   const [expanded, setExpanded] = React.useState(true);
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
@@ -76,7 +77,9 @@ export default function ResultPanel({ features }: ResultPanel) {
   return (
     <Card>
       <CardActions disableSpacing>
-        <Typography>Results {`(${features?.length})` || "(...)"}</Typography>
+        <Typography>
+          Results {status === "success" ? `(${features?.length})` : "(...)"}
+        </Typography>
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
