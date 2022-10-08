@@ -1,48 +1,39 @@
 import { Box, Drawer, useMediaQuery, useTheme } from "@mui/material";
-import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setLayerView } from "./features/arcgis/arcgisSlice";
-import { setTempDrawerOpen } from "./features/layout/layoutSlice";
+import { useEffect, useRef } from "react";
+import { useArcgis } from "./store/arcgisStore";
 import LeftPanel from "./components/LeftPanel";
-import { RootState } from "./store/store";
+import { useLayout } from "./store/layoutStore";
 import ExpandButton from "./widgets/ExpandButton";
 
 const drawerWidth = "240px";
 
 function App() {
-  const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-  const { view, featureLayer } = useSelector(
-    (state: RootState) => state.arcgis
-  );
-  const { tempDrawerOpen } = useSelector((state: RootState) => state.layout);
+  const mapView = useArcgis((state) => state.mapView);
+  const { tempDrawerOpen, setTempDrawerOpen } = useLayout();
 
-  const viewRef = React.useRef<HTMLDivElement>(null);
+  const viewRef = useRef<HTMLDivElement>(null);
 
-  React.useEffect(() => {
-    view.container = viewRef.current as HTMLDivElement;
-
-    view.whenLayerView(featureLayer).then((layerView) => {
-      dispatch(setLayerView(layerView));
-    });
+  useEffect(() => {
+    mapView.container = viewRef.current as HTMLDivElement;
   }, []);
 
-  React.useEffect(() => {
-    view.when(() => {
+  useEffect(() => {
+    mapView.when(() => {
       if (!matches) {
         ExpandButton.addEventListener("click", () => {
-          dispatch(setTempDrawerOpen(true));
+          setTempDrawerOpen(true);
         });
-        view.ui.add(ExpandButton, "top-left");
+        mapView.ui.add(ExpandButton, "top-left");
       } else {
-        view.ui.remove(ExpandButton);
+        mapView.ui.remove(ExpandButton);
       }
     });
-  }, [view, matches]);
+  }, [mapView, matches]);
 
   function handleTempDrawerClose() {
-    dispatch(setTempDrawerOpen(false));
+    setTempDrawerOpen(false);
   }
 
   return (

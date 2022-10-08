@@ -1,14 +1,12 @@
 import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import Map from "@arcgis/core/Map";
-import FeatureLayerView from "@arcgis/core/views/layers/FeatureLayerView";
 import MapView from "@arcgis/core/views/MapView";
-import { createSlice } from "@reduxjs/toolkit";
+import create from "zustand";
 
 interface ArcgisState {
   map: Map;
-  view: MapView;
+  mapView: MapView;
   featureLayer: FeatureLayer;
-  layerView?: FeatureLayerView;
 }
 
 const featureLayer = new FeatureLayer({
@@ -51,28 +49,14 @@ const map = new Map({
   layers: [featureLayer],
 });
 
-const view = new MapView({
+const mapView = new MapView({
   map: map,
   center: [-120, 45],
   zoom: 3,
 });
 
-const initialState: ArcgisState = {
+export const useArcgis = create<ArcgisState>((set) => ({
   map: map,
-  view: view,
+  mapView: mapView,
   featureLayer: featureLayer,
-};
-
-const arcgisSlice = createSlice({
-  name: "arcgis",
-  initialState,
-  reducers: {
-    setLayerView(state, action) {
-      state.layerView = action.payload;
-    },
-  },
-});
-
-export const { setLayerView } = arcgisSlice.actions;
-
-export default arcgisSlice.reducer;
+}));

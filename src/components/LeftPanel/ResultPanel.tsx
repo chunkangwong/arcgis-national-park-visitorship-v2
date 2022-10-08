@@ -1,3 +1,5 @@
+import { useArcgis } from "@/store/arcgisStore";
+import { useLayout } from "@/store/layoutStore";
 import Graphic from "@arcgis/core/Graphic";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
@@ -17,9 +19,6 @@ import {
 import { styled } from "@mui/material/styles";
 import { useTheme } from "@mui/system";
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import { setTempDrawerOpen } from "@features/layout/layoutSlice";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -36,13 +35,16 @@ export const ExpandMore = styled((props: ExpandMoreProps) => {
   }),
 }));
 
-export default function ResultPanel() {
+interface ResultPanel {
+  features?: Graphic[];
+}
+
+export default function ResultPanel({ features }: ResultPanel) {
   const theme = useTheme();
-  const dispatch = useDispatch();
-  const { features, status } = useSelector((state: RootState) => state.filter);
-  const { view } = useSelector((state: RootState) => state.arcgis);
   const [expanded, setExpanded] = React.useState(true);
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
+  const mapView = useArcgis((state) => state.mapView);
+  const setTempDrawerOpen = useLayout((state) => state.setTempDrawerOpen);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -52,13 +54,13 @@ export default function ResultPanel() {
     const popup = features && features[index];
     if (popup) {
       if (!matches) {
-        dispatch(setTempDrawerOpen(false));
+        setTempDrawerOpen(false);
       }
-      view.popup.open({
+      mapView.popup.open({
         features: [popup],
         location: popup.geometry,
       });
-      view.goTo(
+      mapView.goTo(
         {
           center: [
             (feature.geometry as __esri.Point).longitude,
@@ -74,9 +76,7 @@ export default function ResultPanel() {
   return (
     <Card>
       <CardActions disableSpacing>
-        <Typography>
-          Results {status === "succeeded" ? `(${features.length})` : "(...)"}
-        </Typography>
+        <Typography>Results {`(${features?.length})` || "(...)"}</Typography>
         <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
@@ -92,7 +92,7 @@ export default function ResultPanel() {
         unmountOnExit
       >
         <List>
-          {features.map((feature, index) => (
+          {features?.map((feature, index) => (
             <ListItemButton
               key={index}
               onClick={() => handleResultClick(feature, index)}

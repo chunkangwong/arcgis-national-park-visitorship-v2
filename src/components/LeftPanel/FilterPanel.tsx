@@ -1,3 +1,4 @@
+import { OrderBy, useFilter, Year } from "@/store/filterStore";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import {
   Card,
@@ -13,18 +14,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Stack } from "@mui/system";
-import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
-import {
-  filterItems,
-  OrderBy,
-  resetDefault,
-  setCount,
-  setOrderBy,
-  setYear,
-  Year,
-} from "@features/filter/filterSlice";
 
 const marks = [
   {
@@ -53,54 +42,37 @@ function valuetext(value: number) {
   return `${value + 1}`;
 }
 
-export default function FilterPanel() {
-  const dispatch = useDispatch();
-  const { orderBy, count, year, status } = useSelector(
-    (state: RootState) => state.filter
-  );
-  const { layerView, featureLayer } = useSelector(
-    (state: RootState) => state.arcgis
-  );
+interface FilterPanelProps {}
 
-  React.useEffect(() => {
-    if (layerView) {
-      dispatch(
-        filterItems({
-          orderBy,
-          count,
-          year,
-          layerView,
-          featureLayer,
-        }) as any
-      );
-    }
-  }, [orderBy, count, year, layerView]);
+export default function FilterPanel({}: FilterPanelProps) {
+  const { orderBy, count, year, setCount, setOrderBy, setYear, resetDefault } =
+    useFilter();
 
   function handleOrderByChange(event: React.MouseEvent<HTMLElement>) {
     const target = event.target as HTMLButtonElement;
-    dispatch(setOrderBy(target.value as OrderBy));
+    setOrderBy(target.value as OrderBy);
   }
 
   function handleYearChange(event: SelectChangeEvent) {
-    dispatch(setYear(event.target.value as Year));
+    setYear(event.target.value as Year);
   }
 
   function handleCountChange(
     event: React.SyntheticEvent | Event,
     value: number | number[]
   ) {
-    dispatch(setCount(value as number));
+    setCount(value as number);
   }
 
   function handleCountChangeCommitted(
     event: React.SyntheticEvent | Event,
     value: number | number[]
   ) {
-    dispatch(setCount(value as number));
+    setCount(value as number);
   }
 
   function handleResetDefault() {
-    dispatch(resetDefault());
+    resetDefault();
   }
 
   return (
