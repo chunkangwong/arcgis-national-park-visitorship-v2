@@ -4,7 +4,8 @@ This project is to demonstrate the development of a ArcGIS web app using ArcGIS 
 
 - TypeScript
 - React
-- Redux Toolkit
+- Zustand
+- React Query
 - Material UI
 - Vite
 
