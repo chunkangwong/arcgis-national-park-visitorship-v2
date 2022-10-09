@@ -1,9 +1,8 @@
+import { RootState } from "@/store/store";
 import Graphic from "@arcgis/core/Graphic";
-import FeatureLayer from "@arcgis/core/layers/FeatureLayer";
 import FeatureFilter from "@arcgis/core/layers/support/FeatureFilter";
 import TopFeaturesQuery from "@arcgis/core/rest/support/TopFeaturesQuery";
 import TopFilter from "@arcgis/core/rest/support/TopFilter";
-import FeatureLayerView from "@arcgis/core/views/layers/FeatureLayerView";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type OrderBy = "ASC" | "DESC";
@@ -21,11 +20,6 @@ interface FilterState extends FilterPanelState {
   features: Graphic[];
 }
 
-interface ResultFilterProps extends FilterPanelState {
-  featureLayer: FeatureLayer;
-  layerView?: FeatureLayerView;
-}
-
 const initialState: FilterState = {
   orderBy: "DESC",
   year: "TOTAL",
@@ -36,13 +30,11 @@ const initialState: FilterState = {
 
 export const filterItems = createAsyncThunk(
   "filter/filterItems",
-  async ({
-    count,
-    year,
-    orderBy,
-    layerView,
-    featureLayer,
-  }: ResultFilterProps) => {
+  async (_, { getState }) => {
+    const {
+      filter: { count, year, orderBy },
+      arcgis: { layerView, featureLayer },
+    } = getState() as RootState;
     const query = new TopFeaturesQuery({
       topFilter: new TopFilter({
         topCount: count,
