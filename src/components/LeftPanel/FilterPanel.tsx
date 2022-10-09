@@ -15,7 +15,7 @@ import {
 import { Stack } from "@mui/system";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import {
   filterItems,
   OrderBy,
@@ -54,7 +54,7 @@ function valuetext(value: number) {
 }
 
 export default function FilterPanel() {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const { orderBy, count, year, status } = useSelector(
     (state: RootState) => state.filter
   );
@@ -64,15 +64,7 @@ export default function FilterPanel() {
 
   React.useEffect(() => {
     if (layerView) {
-      dispatch(
-        filterItems({
-          orderBy,
-          count,
-          year,
-          layerView,
-          featureLayer,
-        }) as any
-      );
+      dispatch(filterItems());
     }
   }, [orderBy, count, year, layerView]);
 
