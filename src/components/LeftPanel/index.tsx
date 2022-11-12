@@ -8,7 +8,6 @@ import MapView from "@arcgis/core/views/MapView";
 import { Paper, Typography } from "@mui/material";
 import { Stack } from "@mui/system";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
 import FilterPanel from "./FilterPanel";
 import ResultPanel from "./ResultPanel";
 
@@ -32,70 +31,69 @@ window.view = new MapView({
 export default function LeftPanel() {
   const { orderBy, count, year } = useFilter();
 
-  const { status, data, refetch } = useQuery(["filter"], async () => {
-    const featureLayer = new FeatureLayer({
-      url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/US_National_Parks_Annual_Visitation/FeatureServer/0",
-      outFields: ["*"],
-      popupTemplate: {
-        title: "{Park}",
-        content: [
-          {
-            type: "fields",
-            fieldInfos: [
-              {
-                fieldName: "TOTAL",
-                label: "Total visits",
-                format: { digitSeparator: true },
-              },
-              {
-                fieldName: "F2018",
-                label: "2018",
-                format: { digitSeparator: true },
-              },
-              {
-                fieldName: "F2019",
-                label: "2019",
-                format: { digitSeparator: true },
-              },
-              {
-                fieldName: "F2020",
-                label: "2020",
-                format: { digitSeparator: true },
-              },
-            ],
-          },
-        ],
-      },
-    });
-    window.map.add(featureLayer);
+  const { status, data } = useQuery(
+    ["filter", orderBy, count, year],
+    async () => {
+      const featureLayer = new FeatureLayer({
+        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/US_National_Parks_Annual_Visitation/FeatureServer/0",
+        outFields: ["*"],
+        popupTemplate: {
+          title: "{Park}",
+          content: [
+            {
+              type: "fields",
+              fieldInfos: [
+                {
+                  fieldName: "TOTAL",
+                  label: "Total visits",
+                  format: { digitSeparator: true },
+                },
+                {
+                  fieldName: "F2018",
+                  label: "2018",
+                  format: { digitSeparator: true },
+                },
+                {
+                  fieldName: "F2019",
+                  label: "2019",
+                  format: { digitSeparator: true },
+                },
+                {
+                  fieldName: "F2020",
+                  label: "2020",
+                  format: { digitSeparator: true },
+                },
+              ],
+            },
+          ],
+        },
+      });
+      window.map.add(featureLayer);
 
-    const query = new TopFeaturesQuery({
-      topFilter: new TopFilter({
-        topCount: count,
-        groupByFields: ["State"],
+      const query = new TopFeaturesQuery({
+        topFilter: new TopFilter({
+          topCount: count,
+          groupByFields: ["State"],
+          orderByFields: [`${year} ${orderBy}`],
+        }),
         orderByFields: [`${year} ${orderBy}`],
-      }),
-      orderByFields: [`${year} ${orderBy}`],
-      outFields: ["State, TOTAL, F2018, F2019, F2020, Park"],
-      returnGeometry: true,
-      cacheHint: false,
-    });
+        outFields: ["State, TOTAL, F2018, F2019, F2020, Park"],
+        returnGeometry: true,
+        cacheHint: false,
+      });
 
-    const results = await featureLayer.queryTopFeatures(query);
+      const results = await featureLayer.queryTopFeatures(query);
 
-    query.orderByFields = [""];
-    const objectIds = await featureLayer.queryTopObjectIds(query);
-    const featureLayerView = await window.view.whenLayerView(featureLayer);
-    const filter = new FeatureFilter({
-      objectIds: objectIds,
-    });
-    featureLayerView.filter = filter;
-    return results.features;
-  });
-
-  useEffect(() => {
-    refetch();
-  }, [orderBy, count, year]);
+      query.orderByFields = [""];
+      const objectIds = await featureLayer.queryTopObjectIds(query);
+      const featureLayerView = await window.view.whenLayerView(featureLayer);
+      const filter = new FeatureFilter({
+        objectIds: objectIds,
+      });
+      featureLayerView.filter = filter;
+      return results.features;
+    }
+  );
 
   return (
     <Stack spacing={2}>
