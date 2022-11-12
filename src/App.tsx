@@ -1,6 +1,5 @@
 import { Box, Drawer, useMediaQuery, useTheme } from "@mui/material";
 import { useEffect, useRef } from "react";
-import { useArcgis } from "./store/arcgisStore";
 import LeftPanel from "./components/LeftPanel";
 import { useLayout } from "./store/layoutStore";
 import ExpandButton from "./widgets/ExpandButton";
@@ -10,27 +9,26 @@ const drawerWidth = "240px";
 function App() {
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-  const mapView = useArcgis((state) => state.mapView);
   const { tempDrawerOpen, setTempDrawerOpen } = useLayout();
 
   const viewRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    mapView.container = viewRef.current as HTMLDivElement;
+    window.view.container = viewRef.current as HTMLDivElement;
   }, []);
 
   useEffect(() => {
-    mapView.when(() => {
+    window.view.when(() => {
       if (!matches) {
         ExpandButton.addEventListener("click", () => {
           setTempDrawerOpen(true);
         });
-        mapView.ui.add(ExpandButton, "top-left");
+        window.view.ui.add(ExpandButton, "top-left");
       } else {
-        mapView.ui.remove(ExpandButton);
+        window.view.ui.remove(ExpandButton);
       }
     });
-  }, [mapView, matches]);
+  }, [matches]);
 
   function handleTempDrawerClose() {
     setTempDrawerOpen(false);

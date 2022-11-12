@@ -1,4 +1,3 @@
-import { useArcgis } from "@/store/arcgisStore";
 import { useLayout } from "@/store/layoutStore";
 import Graphic from "@arcgis/core/Graphic";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -44,7 +43,6 @@ export default function ResultPanel({ features, status }: ResultPanel) {
   const theme = useTheme();
   const [expanded, setExpanded] = React.useState(true);
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-  const mapView = useArcgis((state) => state.mapView);
   const setTempDrawerOpen = useLayout((state) => state.setTempDrawerOpen);
 
   const handleExpandClick = () => {
@@ -57,11 +55,11 @@ export default function ResultPanel({ features, status }: ResultPanel) {
       if (!matches) {
         setTempDrawerOpen(false);
       }
-      mapView.popup.open({
+      window.view.popup.open({
         features: [popup],
         location: popup.geometry,
       });
-      mapView.goTo(
+      window.view.goTo(
         {
           center: [
             (feature.geometry as __esri.Point).longitude,
