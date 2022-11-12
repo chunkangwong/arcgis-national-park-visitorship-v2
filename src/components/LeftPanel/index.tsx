@@ -18,8 +18,44 @@ declare global {
   }
 }
 
+const featureLayer = new FeatureLayer({
+  url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/US_National_Parks_Annual_Visitation/FeatureServer/0",
+  outFields: ["*"],
+  popupTemplate: {
+    title: "{Park}",
+    content: [
+      {
+        type: "fields",
+        fieldInfos: [
+          {
+            fieldName: "TOTAL",
+            label: "Total visits",
+            format: { digitSeparator: true },
+          },
+          {
+            fieldName: "F2018",
+            label: "2018",
+            format: { digitSeparator: true },
+          },
+          {
+            fieldName: "F2019",
+            label: "2019",
+            format: { digitSeparator: true },
+          },
+          {
+            fieldName: "F2020",
+            label: "2020",
+            format: { digitSeparator: true },
+          },
+        ],
+      },
+    ],
+  },
+});
+
 window.map = new Map({
   basemap: "topo-vector",
+  layers: [featureLayer],
 });
 
 window.view = new MapView({
@@ -34,42 +70,6 @@ export default function LeftPanel() {
   const { status, data } = useQuery(
     ["filter", orderBy, count, year],
     async () => {
-      const featureLayer = new FeatureLayer({
-        url: "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/arcgis/rest/services/US_National_Parks_Annual_Visitation/FeatureServer/0",
-        outFields: ["*"],
-        popupTemplate: {
-          title: "{Park}",
-          content: [
-            {
-              type: "fields",
-              fieldInfos: [
-                {
-                  fieldName: "TOTAL",
-                  label: "Total visits",
-                  format: { digitSeparator: true },
-                },
-                {
-                  fieldName: "F2018",
-                  label: "2018",
-                  format: { digitSeparator: true },
-                },
-                {
-                  fieldName: "F2019",
-                  label: "2019",
-                  format: { digitSeparator: true },
-                },
-                {
-                  fieldName: "F2020",
-                  label: "2020",
-                  format: { digitSeparator: true },
-                },
-              ],
-            },
-          ],
-        },
-      });
-      window.map.add(featureLayer);
-
       const query = new TopFeaturesQuery({
         topFilter: new TopFilter({
           topCount: count,
