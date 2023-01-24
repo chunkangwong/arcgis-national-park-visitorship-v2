@@ -56,7 +56,7 @@ export const filterItems = createAsyncThunk(
       objectIds: objectIds,
     });
     layerView.filter = filter;
-    return results.features;
+    return results.features.map((feature) => feature.toJSON());
   }
 );
 

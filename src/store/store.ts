@@ -7,10 +7,6 @@ const store = configureStore({
     filter: filterReducer,
     layout: layoutReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
 });
 
 export default store;
