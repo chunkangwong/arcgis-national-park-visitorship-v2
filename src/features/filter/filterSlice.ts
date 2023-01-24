@@ -1,3 +1,4 @@
+import { featureLayer, view } from "@/arcgis";
 import { RootState } from "@/store/store";
 import Graphic from "@arcgis/core/Graphic";
 import FeatureFilter from "@arcgis/core/layers/support/FeatureFilter";
@@ -33,7 +34,6 @@ export const filterItems = createAsyncThunk(
   async (_, { getState }) => {
     const {
       filter: { count, year, orderBy },
-      arcgis: { layerView, featureLayer },
     } = getState() as RootState;
     const query = new TopFeaturesQuery({
       topFilter: new TopFilter({
@@ -51,12 +51,11 @@ export const filterItems = createAsyncThunk(
 
     query.orderByFields = [""];
     const objectIds = await featureLayer.queryTopObjectIds(query);
-    if (layerView) {
-      const filter = new FeatureFilter({
-        objectIds: objectIds,
-      });
-      layerView.filter = filter;
-    }
+    const layerView = await view.whenLayerView(featureLayer);
+    const filter = new FeatureFilter({
+      objectIds: objectIds,
+    });
+    layerView.filter = filter;
     return results.features;
   }
 );

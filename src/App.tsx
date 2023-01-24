@@ -1,9 +1,9 @@
 import { Box, Drawer, useMediaQuery, useTheme } from "@mui/material";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setLayerView } from "./features/arcgis/arcgisSlice";
-import { setTempDrawerOpen } from "./features/layout/layoutSlice";
+import { view } from "./arcgis";
 import LeftPanel from "./components/LeftPanel";
+import { setTempDrawerOpen } from "./features/layout/layoutSlice";
 import { RootState } from "./store/store";
 import ExpandButton from "./widgets/ExpandButton";
 
@@ -13,19 +13,12 @@ function App() {
   const dispatch = useDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-  const { view, featureLayer } = useSelector(
-    (state: RootState) => state.arcgis
-  );
   const { tempDrawerOpen } = useSelector((state: RootState) => state.layout);
 
   const viewRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     view.container = viewRef.current as HTMLDivElement;
-
-    view.whenLayerView(featureLayer).then((layerView) => {
-      dispatch(setLayerView(layerView));
-    });
   }, []);
 
   React.useEffect(() => {

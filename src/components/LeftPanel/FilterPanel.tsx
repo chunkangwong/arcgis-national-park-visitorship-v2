@@ -1,3 +1,12 @@
+import {
+  filterItems,
+  OrderBy,
+  resetDefault,
+  setCount,
+  setOrderBy,
+  setYear,
+  Year,
+} from "@features/filter/filterSlice";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import {
   Card,
@@ -16,15 +25,6 @@ import { Stack } from "@mui/system";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../store/store";
-import {
-  filterItems,
-  OrderBy,
-  resetDefault,
-  setCount,
-  setOrderBy,
-  setYear,
-  Year,
-} from "@features/filter/filterSlice";
 
 const marks = [
   {
@@ -55,18 +55,13 @@ function valuetext(value: number) {
 
 export default function FilterPanel() {
   const dispatch = useDispatch<AppDispatch>();
-  const { orderBy, count, year, status } = useSelector(
+  const { orderBy, count, year } = useSelector(
     (state: RootState) => state.filter
-  );
-  const { layerView, featureLayer } = useSelector(
-    (state: RootState) => state.arcgis
   );
 
   React.useEffect(() => {
-    if (layerView) {
-      dispatch(filterItems());
-    }
-  }, [orderBy, count, year, layerView]);
+    dispatch(filterItems());
+  }, [orderBy, count, year]);
 
   function handleOrderByChange(event: React.MouseEvent<HTMLElement>) {
     const target = event.target as HTMLButtonElement;

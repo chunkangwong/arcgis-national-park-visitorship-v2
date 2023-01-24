@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import arcgisReducer from "../features/arcgis/arcgisSlice";
 import filterReducer from "../features/filter/filterSlice";
 import layoutReducer from "../features/layout/layoutSlice";
 
 const store = configureStore({
   reducer: {
-    arcgis: arcgisReducer,
     filter: filterReducer,
     layout: layoutReducer,
   },

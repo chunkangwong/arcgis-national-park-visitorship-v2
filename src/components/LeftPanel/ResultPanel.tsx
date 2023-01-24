@@ -1,4 +1,6 @@
+import { view } from "@/arcgis";
 import Graphic from "@arcgis/core/Graphic";
+import { setTempDrawerOpen } from "@features/layout/layoutSlice";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Avatar,
@@ -19,7 +21,6 @@ import { useTheme } from "@mui/system";
 import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { setTempDrawerOpen } from "@features/layout/layoutSlice";
 
 interface ExpandMoreProps extends IconButtonProps {
   expand: boolean;
@@ -40,7 +41,6 @@ export default function ResultPanel() {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { features, status } = useSelector((state: RootState) => state.filter);
-  const { view } = useSelector((state: RootState) => state.arcgis);
   const [expanded, setExpanded] = React.useState(true);
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
 
