@@ -1,3 +1,4 @@
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {
   filterItems,
   OrderBy,
@@ -23,8 +24,6 @@ import {
 } from "@mui/material";
 import { Stack } from "@mui/system";
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store/store";
 
 const marks = [
   {
@@ -54,10 +53,8 @@ function valuetext(value: number) {
 }
 
 export default function FilterPanel() {
-  const dispatch = useDispatch<AppDispatch>();
-  const { orderBy, count, year } = useSelector(
-    (state: RootState) => state.filter
-  );
+  const dispatch = useAppDispatch();
+  const { orderBy, count, year } = useAppSelector((state) => state.filter);
 
   React.useEffect(() => {
     dispatch(filterItems());

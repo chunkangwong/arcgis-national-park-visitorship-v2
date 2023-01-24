@@ -1,19 +1,18 @@
 import { Box, Drawer, useMediaQuery, useTheme } from "@mui/material";
 import * as React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { view } from "./arcgis";
 import LeftPanel from "./components/LeftPanel";
 import { setTempDrawerOpen } from "./features/layout/layoutSlice";
-import { RootState } from "./store/store";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import ExpandButton from "./widgets/ExpandButton";
 
 const drawerWidth = "240px";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
-  const { tempDrawerOpen } = useSelector((state: RootState) => state.layout);
+  const { tempDrawerOpen } = useAppSelector((state) => state.layout);
 
   const viewRef = React.useRef<HTMLDivElement>(null);
 
