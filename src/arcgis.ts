@@ -12,23 +12,18 @@ export const featureLayer = new FeatureLayer({
         type: "fields",
         fieldInfos: [
           {
-            fieldName: "TOTAL",
-            label: "Total visits",
-            format: { digitSeparator: true },
-          },
-          {
-            fieldName: "F2018",
-            label: "2018",
-            format: { digitSeparator: true },
-          },
-          {
-            fieldName: "F2019",
-            label: "2019",
-            format: { digitSeparator: true },
-          },
-          {
             fieldName: "F2020",
             label: "2020",
+            format: { digitSeparator: true },
+          },
+          {
+            fieldName: "F2021",
+            label: "2021",
+            format: { digitSeparator: true },
+          },
+          {
+            fieldName: "F2022",
+            label: "2022",
             format: { digitSeparator: true },
           },
         ],

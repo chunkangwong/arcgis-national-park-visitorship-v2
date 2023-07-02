@@ -7,7 +7,7 @@ import TopFilter from "@arcgis/core/rest/support/TopFilter";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type OrderBy = "ASC" | "DESC";
-export type Year = "TOTAL" | "F2018" | "F2019" | "F2020";
+export type Year = "F2020" | "F2021" | "F2022";
 
 interface FilterPanelState {
   orderBy: OrderBy;
@@ -23,7 +23,7 @@ interface FilterState extends FilterPanelState {
 
 const initialState: FilterState = {
   orderBy: "DESC",
-  year: "TOTAL",
+  year: "F2022",
   count: 1,
   status: "idle",
   features: [],
@@ -42,7 +42,7 @@ export const filterItems = createAsyncThunk(
         orderByFields: [`${year} ${orderBy}`],
       }),
       orderByFields: [`${year} ${orderBy}`],
-      outFields: ["State, TOTAL, F2018, F2019, F2020, Park"],
+      outFields: ["State, F2020, F2021, F2022, Park"],
       returnGeometry: true,
       cacheHint: false,
     });
@@ -75,7 +75,7 @@ const filterSlice = createSlice({
     },
     resetDefault(state) {
       state.orderBy = "DESC";
-      state.year = "TOTAL";
+      state.year = "F2022";
       state.count = 1;
     },
   },

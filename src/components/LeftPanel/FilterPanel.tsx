@@ -96,7 +96,7 @@ export default function FilterPanel() {
           color="primary"
           onClick={handleResetDefault}
           sx={{ marginLeft: "auto" }}
-          disabled={orderBy === "DESC" && year === "TOTAL" && count === 1}
+          disabled={orderBy === "DESC" && year === "F2022" && count === 1}
         >
           <RefreshIcon />
         </IconButton>
@@ -131,10 +131,9 @@ export default function FilterPanel() {
             fullWidth
             inputProps={{ "aria-label": "Without label" }}
           >
-            <MenuItem value="TOTAL">Total of all time</MenuItem>
-            <MenuItem value="F2018">2018</MenuItem>
-            <MenuItem value="F2019">2019</MenuItem>
             <MenuItem value="F2020">2020</MenuItem>
+            <MenuItem value="F2021">2021</MenuItem>
+            <MenuItem value="F2022">2022</MenuItem>
           </Select>
         </div>
         <div>
