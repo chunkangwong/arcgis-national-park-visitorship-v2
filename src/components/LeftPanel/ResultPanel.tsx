@@ -39,7 +39,7 @@ export const ExpandMore = styled((props: ExpandMoreProps) => {
 export default function ResultPanel() {
   const theme = useTheme();
   const dispatch = useAppDispatch();
-  const { features, status } = useAppSelector((state) => state.filter);
+  const { features, status, year } = useAppSelector((state) => state.filter);
   const [expanded, setExpanded] = React.useState(true);
   const matches = useMediaQuery(theme.breakpoints.up("sm"));
 
@@ -98,7 +98,11 @@ export default function ResultPanel() {
             >
               <ListItemText
                 primary={feature.attributes.Park}
-                secondary={`${feature.attributes.TOTAL.toLocaleString()} visitors`}
+                secondary={
+                  feature.attributes[year]
+                    ? `${feature.attributes[year].toLocaleString()} visitors`
+                    : ""
+                }
               />
               <ListItemAvatar>
                 <Avatar>{feature.attributes.State}</Avatar>
